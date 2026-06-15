@@ -163,7 +163,10 @@ typedef NS_ENUM(int, PermissionGroup) {
     PermissionGroupCalendarWriteOnly,
     PermissionGroupCalendarFullAccess,
     PermissionGroupAssistant,
-    PermissionGroupBackgroundRefresh
+    PermissionGroupBackgroundRefresh,
+    PermissionGroupLocationCoarse,
+    PermissionGroupLocationAlwaysCoarse,
+    PermissionGroupLocationWhenInUseCoarse
 };
 
 typedef NS_ENUM(int, PermissionStatus) {

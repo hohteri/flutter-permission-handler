@@ -100,6 +100,9 @@
         case PermissionGroupLocation:
         case PermissionGroupLocationAlways:
         case PermissionGroupLocationWhenInUse:
+        case PermissionGroupLocationCoarse:
+        case PermissionGroupLocationAlwaysCoarse:
+        case PermissionGroupLocationWhenInUseCoarse:
             #if PERMISSION_LOCATION || PERMISSION_LOCATION_WHENINUSE || PERMISSION_LOCATION_ALWAYS
             return [[LocationPermissionStrategy alloc] initWithLocationManager];
             #else

@@ -40,6 +40,7 @@ public class PermissionUtils {
             case Manifest.permission.ACCESS_BACKGROUND_LOCATION:
                 return PermissionConstants.PERMISSION_GROUP_LOCATION_ALWAYS;
             case Manifest.permission.ACCESS_COARSE_LOCATION:
+                return PermissionConstants.PERMISSION_GROUP_LOCATION_COARSE;
             case Manifest.permission.ACCESS_FINE_LOCATION:
                 return PermissionConstants.PERMISSION_GROUP_LOCATION;
             case Manifest.permission.RECORD_AUDIO:
@@ -137,11 +138,20 @@ public class PermissionUtils {
             case PermissionConstants.PERMISSION_GROUP_LOCATION_ALWAYS:
             case PermissionConstants.PERMISSION_GROUP_LOCATION_WHEN_IN_USE:
             case PermissionConstants.PERMISSION_GROUP_LOCATION:
+            case PermissionConstants.PERMISSION_GROUP_LOCATION_ALWAYS_COARSE:
+            case PermissionConstants.PERMISSION_GROUP_LOCATION_WHEN_IN_USE_COARSE:
+            case PermissionConstants.PERMISSION_GROUP_LOCATION_COARSE:
                 // Note that the LOCATION_ALWAYS will deliberately fallthrough to the LOCATION
                 // case on pre Android Q devices. The ACCESS_BACKGROUND_LOCATION permission was only
                 // introduced in Android Q, before it should be treated as the ACCESS_COARSE_LOCATION or
                 // ACCESS_FINE_LOCATION.
                 if (permission == PermissionConstants.PERMISSION_GROUP_LOCATION_ALWAYS && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    if (hasPermissionInManifest(context, permissionNames, Manifest.permission.ACCESS_BACKGROUND_LOCATION))
+                        permissionNames.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+                    break;
+                }
+
+                if (permission == PermissionConstants.PERMISSION_GROUP_LOCATION_ALWAYS_COARSE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     if (hasPermissionInManifest(context, permissionNames, Manifest.permission.ACCESS_BACKGROUND_LOCATION))
                         permissionNames.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION);
                     break;

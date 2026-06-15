@@ -261,6 +261,24 @@ final class PermissionManager implements PluginRegistry.ActivityResultListener, 
                 }
 
                 requestResults.put(permission, permissionStatus);
+            } else if (permission == PermissionConstants.PERMISSION_GROUP_LOCATION_COARSE) {
+                @PermissionConstants.PermissionStatus int permissionStatus =
+                        PermissionUtils.toPermissionStatus(this.activity, permissionName, result);
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                    if (!requestResults.containsKey(PermissionConstants.PERMISSION_GROUP_LOCATION_ALWAYS_COARSE)) {
+                        requestResults.put(
+                                PermissionConstants.PERMISSION_GROUP_LOCATION_ALWAYS_COARSE,
+                                permissionStatus);
+                    }
+                }
+
+                if (!requestResults.containsKey(PermissionConstants.PERMISSION_GROUP_LOCATION_WHEN_IN_USE_COARSE)) {
+                    requestResults.put(
+                            PermissionConstants.PERMISSION_GROUP_LOCATION_WHEN_IN_USE_COARSE,
+                            permissionStatus);
+                }
+                requestResults.put(permission, permissionStatus);
             // [grantResults] can only contain PermissionConstants.PERMISSION_STATUS_GRANTED or PermissionConstants.PERMISSION_STATUS_DENIED status.
             // But these permissions can have status PermissionConstants.PERMISSION_STATUS_LIMITED, so we need to recheck status
             } else if (permission == PermissionConstants.PERMISSION_GROUP_PHOTOS || permission == PermissionConstants.PERMISSION_GROUP_VIDEOS) {

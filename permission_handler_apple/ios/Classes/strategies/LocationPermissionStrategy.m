@@ -46,6 +46,18 @@ NSString *const UserDefaultPermissionRequestedKey = @"org.baseflow.permission_ha
 }
 
 - (void)requestPermission:(PermissionGroup)permission completionHandler:(PermissionStatusHandler)completionHandler errorHandler:(PermissionErrorHandler)errorHandler {
+    if (permission == PermissionGroupLocationAlwaysCoarse) {
+        permission = PermissionGroupLocationAlways;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyReduced;
+    }
+    if (permission == PermissionGroupLocationCoarse) {
+        permission = PermissionGroupLocation;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyReduced;
+    }
+    if (permission == PermissionGroupLocationWhenInUseCoarse) {
+        permission = PermissionGroupLocationWhenInUse;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyReduced;
+    }
     PermissionStatus status = [self checkPermissionStatus:permission];
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse && permission == PermissionGroupLocationAlways) {
         BOOL alreadyRequested = [[NSUserDefaults standardUserDefaults] boolForKey:UserDefaultPermissionRequestedKey]; // check if already requested the permantent permission
